@@ -10,11 +10,9 @@ const Seat = sequelize.define("Seat", {
   reservedUntil: { type: DataTypes.DATE },
 });
 
-// ✅ Fix: Define associations via .associate
 Seat.associate = (models) => {
   Seat.belongsTo(models.Departure, { foreignKey: "departureId" });
 
-  // Many-to-Many: Booking ↔ Seat
   Seat.belongsToMany(models.Booking, {
     through: "BookingSeats",
     foreignKey: "seatId",

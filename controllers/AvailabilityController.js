@@ -16,7 +16,6 @@ exports.getAvailableSeats = async (req, res) => {
 
     const totalSeats = departure.Bus.total_seats;
 
-    // Get all booked seat numbers for this departure
     const bookedSeats = await Seat.findAll({
       where: { departureId: departure_id },
       include: {

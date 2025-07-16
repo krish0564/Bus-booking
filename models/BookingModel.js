@@ -9,13 +9,13 @@ const Booking = sequelize.define("Booking", {
   },
   booking_time: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   departureId: { type: DataTypes.INTEGER, allowNull: false },
-  expiresAt: { type: DataTypes.DATE }, // use
+  expiresAt: { type: DataTypes.DATE },
 });
 
 Booking.associate = (models) => {
   Booking.belongsTo(models.User, { foreignKey: "userId" });
   Booking.belongsTo(models.Departure, { foreignKey: "departureId" });
-  // Many-to-Many: Booking <-> Seats
+
   Booking.belongsToMany(models.Seat, {
     through: "BookingSeats",
     foreignKey: "bookingId",

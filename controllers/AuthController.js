@@ -1,17 +1,15 @@
 const { User } = require("../models/RelationalModel");
 
-//const AppError = require("../utils/appErr");
-
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const generateToken = require("..//utlis/generateToken"); // Should be generateTokenandCookies
+const generateToken = require("..//utlis/generateToken");
 //Signup API
 exports.signup = async (req, res) => {
   try {
     const { email, password, role } = req.body;
     const user = await User.create({ email, password, role });
     generateToken(user.id, user.role, res);
-    // Avoid sending the full user instance (circular structure)
+
     res.status(201).json({
       id: user.id,
       email: user.email,
@@ -32,7 +30,7 @@ exports.login = async (req, res) => {
     if (!user) {
       throw new Error("Invalid email or password");
     }
-    // Compare password
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       throw new Error("Invalid email or password");
